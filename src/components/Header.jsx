@@ -16,6 +16,7 @@ function Header() {
                     <li><Link to="/dogs" className="nav-link px-2 link-dark">Dogs</Link></li>
                     <li><Link to="/bird" className="nav-link px-2 link-dark">Bird</Link></li>
                     <li><Link to="/rodents" className="nav-link px-2 link-dark">Rodents</Link></li>
+                    <li><Link to="/login" className="nav-link px-2 link-dark">Rodents</Link></li>
                 </ul>
 
                 <div className="col-md-3 text-end">
