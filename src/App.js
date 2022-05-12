@@ -5,7 +5,9 @@ import {
     Routes,
     Route,
 } from "react-router-dom";
-import {Header, LoginForm} from "./components";
+import {Header} from "./components";
+import LoginForm from "./components/LoginForm";
+
 
 function App() {
   return (
@@ -15,12 +17,13 @@ function App() {
             <Header/>
             <Routes>
                 <Route path="/" element={<Home />} exact>
-                    <Route path="/login" element={<LoginForm />} exact/>
                 </Route>
                 <Route path="/cats" element={<Products />} exact/>
                 <Route path="/dogs" element={<Products />} exact/>
                 <Route path="/bird" element={<Products />} exact/>
                 <Route path="/rodents" element={<Products />} exact/>
+                <Route path="/login" element={<LoginForm />} exact/>
+
             </Routes>
         </BrowserRouter>
     </div>
