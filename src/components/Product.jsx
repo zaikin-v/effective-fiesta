@@ -1,15 +1,22 @@
 import PropTypes from 'prop-types';
 import {Button, Card} from "react-bootstrap";
+import {addToCart} from "../slices/cart";
+import {useDispatch} from "react-redux";
+import {useHistory} from "react-router-dom";
 
 
-function Product({name, description, price, imageUrl}) {
+function Product({id, name, description, price, image}) {
 
-    const onClickAddToBasket = () => {
-        console.log(name)
+    const dispatch = useDispatch();
+
+    const onClickAddToBasket = (product) => {
+        dispatch(addToCart(product));
     }
+
     return (
         <Card className={'shadow-sm'}>
-            <Card.Img variant="top" src={imageUrl} />
+            <Card.Title> {name} </Card.Title>
+            <Card.Img variant="top" src={image} />
             <Card.Body
             md={5}
             >
@@ -20,7 +27,7 @@ function Product({name, description, price, imageUrl}) {
                 <div className="d-flex justify-content-between align-items-center">
                     <Button
                         variant="submit"
-                        onClick={() => onClickAddToBasket()}
+                        onClick={() => onClickAddToBasket({"id": id, "name": name, "description": description, "price": price})}
                     >
                         Add
                     </Button>
@@ -37,10 +44,11 @@ function Product({name, description, price, imageUrl}) {
 }
 
 Product.propTypes = {
+    id: PropTypes.number,
     name: PropTypes.string,
     description: PropTypes.string,
-    imageUrl: PropTypes.string,
     price: PropTypes.number,
+    image: PropTypes.string,
     count: PropTypes.number,
 };
 
@@ -48,7 +56,6 @@ Product.defaultProps = {
     name: '---',
     description: "Some text",
     price: 0,
-    imageUrl: 'https://4lapy.ru/resize/800x800/upload/iblock/a5d/a5d9f36c6c35c10744d39430d15f5e9d.jpg'
 };
 
 export default Product

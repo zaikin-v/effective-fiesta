@@ -1,39 +1,39 @@
 import {Col, Container, Row} from "react-bootstrap";
 import {Product} from "../components";
+import {useDispatch, useSelector} from "react-redux";
+import {useCallback, useEffect} from "react";
+import {useLocation} from "react-router-dom";
+import {retrieveTutorials} from "../slices/products";
 
-function Products() {
-    const products = [
-            {
-                id: 1,
-                name: '---',
-                description: "Some text",
-                price: 0,
-                imageUrl: 'https://4lapy.ru/resize/800x800/upload/iblock/a5d/a5d9f36c6c35c10744d39430d15f5e9d.jpg'
-            },
-            {
-                id: 2,
-                name: '---',
-                description: "Some text",
-                price: 0,
-                imageUrl: 'https://4lapy.ru/resize/800x800/upload/iblock/a5d/a5d9f36c6c35c10744d39430d15f5e9d.jpg'
-            }
-        ]
+const Products = (props) => {
+    const products = useSelector(state => state.products)
+
+    const dispatch = useDispatch();
+    const location = useLocation();
+    const initFetch = useCallback((type) => {
+        dispatch(retrieveTutorials({ type: type }));
+    }, [dispatch])
+
+    useEffect(() => {
+        initFetch(location.pathname.replace("/", ""))
+    }, [initFetch, location])
+
+
     return (
         <div className="album py-5">
             <Container>
                 <Row sm={2} md={3} className="g-3">
-
-                        { products.map((obj) => (
+                        { products && products.map((obj) => (
                             <Col mt={5} style={{ maxWidth: "70%"}}>
                             <Product
                                 key={obj.id}
+                                id={obj.id}
                                 name={obj.name}
                                 description={obj.description}
                                 price={obj.price}
-                                imageUrl={obj.imageUrl}
+                                image={obj.image}
                             />
                             </Col>
-
                         ))}
                 </Row>
             </Container>

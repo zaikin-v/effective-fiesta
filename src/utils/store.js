@@ -1,14 +1,17 @@
-import { createStore, applyMiddleware } from 'redux';
-import thunkMiddleware from 'redux-thunk';
-import { createLogger } from 'redux-logger';
-import rootReducer from '../reducers';
+import { configureStore } from '@reduxjs/toolkit'
+import authReducer from "../slices/auth";
+import productReducer from "../slices/products"
+import cartReducer from "../slices/cart"
+import logger from 'redux-logger'
 
-const loggerMiddleware = createLogger();
-
-export const store = createStore(
-    rootReducer,
-    applyMiddleware(
-        thunkMiddleware,
-        loggerMiddleware
-    )
-);
+const reducer = {
+    products: productReducer,
+    auth: authReducer,
+    cart: cartReducer
+}
+const store = configureStore({
+    reducer: reducer,
+    devTools: true,
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
+})
+export default store;

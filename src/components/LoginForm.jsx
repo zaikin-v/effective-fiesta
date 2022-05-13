@@ -1,15 +1,10 @@
-import {
-    Button,
-    Form,
-    FormControl,
-    FormFloating, FormGroup,
-    FormLabel,
-    Image,
-} from "react-bootstrap";
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 
-import { authActions } from "../actions";
-import {connect} from "react-redux";
+import { useDispatch, useSelector} from "react-redux";
+import {login} from "../slices/auth";
+import { Formik, Field, Form, ErrorMessage } from "formik";
+import { useNavigate } from 'react-router-dom';
+
 
 const formStyle = {
     width: '300px',
@@ -18,83 +13,89 @@ const formStyle = {
     marginBottom: '8%'
 };
 
-class LoginForm extends React.Component {
-    constructor(props) {
-        super(props);
+const LoginForm = (props) => {
+    const [loading, setLoading] = useState(false);
 
-        this.state = {
-            username: '',
-            password: '',
-            submitted: false
-        };
+    const {isLoggedIn} = useSelector((state) => state.auth);
 
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
+    const dispatch = useDispatch();
+    let navigate = useNavigate();
 
-    }
 
-    handleChange(e) {
-        console.log(e.target)
-        const { name, value } = e.target;
-        this.setState({ [name]: value });
-    }
-
-    handleSubmit(e) {
-        e.preventDefault();
-        console.log("dsadadas")
-        this.setState({submitted: true});
-        const {username, password} = this.state;
-        const {dispatch} = this.props;
-        if (username && password) {
-            console.log("dasdsa")
-            dispatch(authActions.login(username, password));
+    useEffect(() => {
+        if (isLoggedIn){
+            return navigate("/");
         }
-    }
+    },[isLoggedIn]);
 
-    render() {
-        const { loggingIn } = this.props;
-        const { username, password, submitted } = this.state;
-        console.log(this.state)
-        return (
-            <div className="form-sign" style={formStyle}>
-                <Form className="form-sign" onSubmit={this.handleSubmit}>
-                    <Image className="mb-4"
+    // useEffect(() => {
+    //     dispatch(clearMessage());
+    // }, [dispatch]);
+
+    const initialValues = {
+        username: "",
+        password: "",
+    };
+
+    // const validationSchema = Yup.object().shape({
+    //     username: Yup.string().required("This field is required!"),
+    //     password: Yup.string().required("This field is required!"),
+    // });
+
+    const handleLogin = (formValue) => {
+        const {username, password} = formValue;
+        setLoading(true);
+        console.log(formValue)
+        dispatch(login({username, password}))
+            .unwrap()
+            .then(() => {
+                props.history.push("/");
+                window.location.reload();
+            })
+            .catch(() => {
+                setLoading(false);
+            });
+    };
+
+    return (
+        <div className="form-sign" style={formStyle}>
+            <Formik initialValues={initialValues} onSubmit={handleLogin}>
+                <Form className="form-sign">
+                    <img className="mb-4"
                            src="https://img.icons8.com/metro/452/cat.png"
                            width="72"
                            height="57"/>
                     <h1 className="h3 mb-3 fw-normal">Please sign in</h1>
-                        <FormGroup>
-                        <FormLabel>Email address</FormLabel>
-                        <FormControl name='username' type="text" placeholder="name@example.com" value={username} onChange={this.handleChange}/>
-                        {submitted && !username &&
-                            <div className="help-block">Password is required</div>
-                        }
-                        </FormGroup>
-                            <FormGroup>
-
-                            <FormLabel>Password</FormLabel>
-                            <FormControl name='password' type="text" placeholder="Password" value={password} onChange={this.handleChange}/>
-                            {submitted && !password &&
-                                <div className="help-block">Password is required</div>
-                            }
-                            </FormGroup>
-                    <Form.Check type="checkbox" label="Запомнить меня"></Form.Check>
-                    <FormGroup>
-                        <Button type="submit" variant="primary" onSubmit={this.handleSubmit}>Login</Button>
-                    </FormGroup>
+                        <div className="form-group">
+                            <label htmlFor="username">Username</label>
+                            <Field name="username" type="text" className="form-control" />
+                            <ErrorMessage
+                                name="username"
+                                component="div"
+                                className="alert alert-danger"
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="password">Password</label>
+                            <Field name="password" type="password" className="form-control" />
+                            <ErrorMessage
+                                name="password"
+                                component="div"
+                                className="alert alert-danger"
+                            />
+                        </div>
+                        <div className="form-group">
+                            <button type="submit" className="btn btn-primary btn-block" disabled={loading}>
+                                {loading && (
+                                    <span className="spinner-border spinner-border-sm"></span>
+                                )}
+                                <span>Login</span>
+                            </button>
+                        </div>
                 </Form>
-            </div>
-
-        )
-    }
+            </Formik>
+        </div>
+    )
 }
 
-
-function mapStateToProps(state) {
-    const { loggingIn } = state.authentication;
-    return {
-        loggingIn
-    };
-}
-
-export default connect(mapStateToProps)(LoginForm);
+export default LoginForm
