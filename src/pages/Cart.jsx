@@ -46,18 +46,20 @@ const Cart = () => {
                                     <td> {item.description} </td>
                                     <td> {item.count} </td>
                                     <td> {item.price * item.count} </td>
-                                    <td> <button onClick={() => handleDecreaseCart(item)}>
-                                        -
-                                    </button>
-                                        <div className="count">{item.count}</div>
-                                        <button onClick={() => handleAddToCart(item)}>+</button></td>
+                                    <td>
+                                        <div className="btn-group" role="group" aria-label="Basic example">
+                                            <button type="button" className="btn btn-primary" onClick={() => handleDecreaseCart(item)}>-</button>
+                                            <div className="count mh-100 ml-1" style={{fontSize: 25}}>{item.count}</div>
+                                            <button type="button" className="btn btn-primary" onClick={() => handleAddToCart(item)}>+</button>
+                                        </div>
+                                    </td>
                                 </tr>
                             ))}
                             </tbody>
                         </table>
                     </div>
                     <div> Итого:{cart.cartTotalAmount} </div>
-                <button id="order" className="btn btn-info" onClick={() => handleClearCart(cart.cartTotalAmount)}>Оформить заказ</button>
+                <button id="order" className="btn btn-primary" onClick={() => handleClearCart(cart.cartTotalAmount)}>Оформить заказ</button>
             </div>
     )
 }

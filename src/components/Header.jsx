@@ -20,18 +20,19 @@ function Header() {
                     <li><Link to="/dogs" className="nav-link px-2 link-dark">Dogs</Link></li>
                     <li><Link to="/bird" className="nav-link px-2 link-dark">Bird</Link></li>
                     <li><Link to="/rodents" className="nav-link px-2 link-dark">Rodents</Link></li>
-                    <li><Link to="/login" className="nav-link px-2 link-dark">Rodents</Link></li>
                 </ul>
                 <div>
                     {isLoggedIn?
                         <div className="col-md-3 text-end">
+                            <div className="btn-group" role="group" aria-label="Basic example">
                             <div>
-                                <a href="/cart" type="button" className="btn btn-outline-primary me-2">Shopping cart</a>
+                                <a href="/cart" type="button" className="btn btn-outline-primary">Shopping cart</a>
                             </div>
                             <div>
                                 <Link to="/profile" className="btn btn-primary">Profile</Link>
                             </div>
-                        </div> :
+                        </div>
+                        </div>:
                         <div className="col-md-3 text-end">
                             <Link to="/login" className="btn btn-primary">Login</Link>
                         </div>

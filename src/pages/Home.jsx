@@ -7,6 +7,7 @@ const fontStyle = {
 
 function Home () {
     return (
+        <>
             <Container text-center="true">
                 <Row className="py-lg-5">
                     <Col lg={6} md={8} className="mx-auto">
@@ -36,8 +37,46 @@ function Home () {
                     </Col>
                 </Row>
             </Container>
+            <div className="container text-center">
+                <h1 className="h3 mt-1 mb-3">Photo from "RAY"</h1>
 
-    )
+                <div id="carousel" className="carousel slide d-inline-block" data-ride="carousel">
+                    <ol className="carousel-indicators">
+                        <li data-target="#carousel" data-slide-to="0" className="active"></li>
+                        <li data-target="#carousel" data-slide-to="1"></li>
+                        <li data-target="#carousel" data-slide-to="2"></li>
+                    </ol>
+                    <div className="carousel-inner">
+                        <div className="carousel-item active">
+                            <img className="img-fluid"
+                                 src="https://rayfund.ru/wp-content/uploads/2021/02/Finik_4-768x512.jpg" alt="..."/>
+                        </div>
+                        <div className="carousel-item">
+                            <img className="img-fluid"
+                                 src="https://rayfund.ru/wp-content/uploads/2021/02/IMG_0607-768x440.jpg" alt="..."/>
+                        </div>
+                        <div className="carousel-item">
+                            <img className="img-fluid"
+                                 src="https://rayfund.ru/wp-content/uploads/2021/01/Pinya1-1-745x420.jpg" alt="..."/>
+                        </div>
+                    </div>
+                    <a className="carousel-control-prev" href="#carousel" role="button" data-slide="prev">
+                        <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span className="sr-only">Previous</span>
+                    </a>
+                    <a className="carousel-control-next" href="#carousel" role="button" data-slide="next">
+                        <span className="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span className="sr-only">Next</span>
+                    </a>
+                </div>
+
+            </div>
+
+
+            <script src="/examples/vendors/jquery/jquery-3.3.1.min.js"></script>
+            <script src="/examples/vendors/popper.js/popper.min.js"></script>
+        </>
+)
 }
 
 export default Home;
