@@ -1,5 +1,5 @@
 import './App.css';
-import {Cart, Home, Products} from "./pages";
+import {Cart, Discipline, Disciplines, Home, Students, WorkPage} from "./pages";
 import {
     BrowserRouter,
     Routes,
@@ -32,20 +32,16 @@ function RequireAuth() {
 function App() {
   return (
     <div className="App">
-      {/*<Products/>*/}
         <BrowserRouter>
             <Header/>
             <Routes>
-                <Route path="/" element={<Home />} />
-                <Route element={<RequireAuth />}>
-                    <Route path="/cats" key="cats" element={<Products />} />
-                    <Route path="/dogs" key="dogs" element={<Products />} />
-                    <Route path="/bird" key="bird" element={<Products />} />
-                    <Route path="/rodents" key="rodents" element={<Products />} />
-                    <Route path="/cart" element={<Cart />} />
-                    <Route path="/profile" element={<Profile />} />
-                </Route>
-
+                <Route path="/" element={<Students />} />
+                    {/* <Route path="/dis" key="disc" element={<Dis />} /> */}
+                <Route path="/groups" key="groups" element={<Students />} />
+                <Route path="/disciplines" key="disciplines" element={<Disciplines />} />
+                <Route path="/profile" element={<Disciplines />} />
+                <Route path="/disciplines/:id" element={<Discipline />} />
+                <Route path="/student/:studentId/work/:workId" element={<WorkPage />} />
                 <Route path="/login" element={<LoginForm />} />
 
             </Routes>

@@ -1,3 +1,6 @@
-export { default as Products } from './Products'
 export { default as Home } from './Home'
 export { default as Cart } from './Cart'
+export { default as Students } from './Students'
+export { default as Disciplines } from './Disciplines'
+export { default as Discipline } from './Discipline' 
+export { default as WorkPage } from './WorkPage'
