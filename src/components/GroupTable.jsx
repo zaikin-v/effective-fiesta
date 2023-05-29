@@ -14,12 +14,12 @@ const GroupTable = () => {
       { id: 2, name: 'ИКБО-13-19' },
       { id: 3, name: 'ИКБО-20-19' },
     ];
+    setSelectedGroup(groups[0])
     setGroups(groups);
   }, []);
 
   useEffect(() => {
     if (selectedGroup) {
-      // Здесь можно получить список студентов выбранной группы из бекенда
       const students = [
         { id: 1, name: 'Иван Иванов Иванович', group: selectedGroup.name, hasSubmittedWork: true, workId: 1 },
         { id: 2, name: 'Петр Петров Петрович', group: selectedGroup.name, hasSubmittedWork: false, workId: 3 },

@@ -1,33 +1,87 @@
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { Table } from 'react-bootstrap';
 
-function WorkPage(props) {
-    const { studentId, workId } = useParams();
-    const [work, setWork] = useState(null);
-  
-    useEffect(() => {
-      // Здесь вы можете получить данные о работе из вашего бекенда
-      // используя studentId и workId, переданные в параметрах URL.
-      // После получения данных, вы можете сохранить их в состоянии.
-      const fetchWork = async () => {
-        const response = await fetch(`/api/students/${studentId}/works/${workId}`);
-        const data = await response.json();
-        setWork(data);
-      };
-      fetchWork();
-    }, [studentId, workId]);
-  
-    if (!work) {
-      return <div>Loading...</div>;
-    }
-  
-    return (
-      <div>
-        <h1>{work.title}</h1>
-        <p>{work.description}</p>
-        <p>Grade: {work.grade}</p>
-      </div>
-    );
+import { Viewer, Worker } from '@react-pdf-viewer/core';
+import '@react-pdf-viewer/core/lib/styles/index.css';
+import { toolbarPlugin } from '@react-pdf-viewer/toolbar';
+import '@react-pdf-viewer/toolbar/lib/styles/index.css';
+import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
+
+
+import { pdfjs } from 'react-pdf';
+pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/legacy/build/pdf.worker.min.js`;
+
+const WorkPage = () => {
+  const [numPages, setNumPages] = useState(null);
+  const [pageNumber, setPageNumber] = useState(1);
+  const [studentWork1, setStudentWork1] = useState(null)
+  const defaultLayoutPluginInstance = defaultLayoutPlugin();
+
+    const studentWork = {
+        id: 1,
+        studentName: 'Иванов Иван Иванович',
+        discipline: 'Математический анализ',
+        task: 'Название работы',
+        fileUrl: '/files/student-work.pdf',
+        grade: 4,
+        comments: 'Решение выполнено верно, но есть некоторые неточности в вычислениях',
+        dueDate: '2023-05-28T10:23:45.000Z',
+        updatedAt: '2023-05-28T12:45:23.000Z'
+      }
+
+  function onDocumentLoadSuccess({ numPages }) {
+    setNumPages(numPages);
   }
 
-  export default WorkPage
+  return (
+    <div>
+      <h1>Просмотр работы студента</h1>
+      <Table striped bordered hover>
+        <tbody>
+          <tr>
+            <td>Название работы</td>
+            <td>{studentWork.task}</td>
+          </tr>
+          <tr>
+            <td>Дата сдачи</td>
+            <td>{studentWork.dueDate}</td>
+          </tr>
+          <tr>
+            <td>Дата сдачи работы</td>
+            <td>{studentWork.updatedAt}</td>
+          </tr>
+          <tr>
+            <td>Оценка</td>
+            <td>{studentWork.grade}</td>
+          </tr>
+          <tr>
+            <td>Загруженный файл</td>
+            <td>
+              <a href={studentWork.fileUrl} target="_blank" rel="noopener noreferrer">
+                Скачать файл
+              </a>
+            </td>
+          </tr>
+          <tr>
+            <td>Шаблон формы выставление оценки</td>
+            <td>
+              <a href={studentWork.fileUrl} target="_blank" rel="noopener noreferrer">
+                Скачать файл
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </Table>
+      <div style={{ height: '750px' }}>
+        <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.7.107/build/pdf.worker.min.js">
+            <div style={{ height: '750px' }}>
+                <Viewer fileUrl={studentWork.fileUrl} plugins={[defaultLayoutPluginInstance]} />;
+            </div>
+        </Worker>
+       </div>
+
+    </div>
+  );
+}
+
+export default WorkPage;
