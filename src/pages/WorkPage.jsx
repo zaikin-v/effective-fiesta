@@ -2,11 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Table } from 'react-bootstrap';
 
 import { Viewer, Worker } from '@react-pdf-viewer/core';
-import '@react-pdf-viewer/core/lib/styles/index.css';
 import { toolbarPlugin } from '@react-pdf-viewer/toolbar';
-import '@react-pdf-viewer/toolbar/lib/styles/index.css';
 import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
-
+import '@react-pdf-viewer/core/lib/styles/index.css';
+import '@react-pdf-viewer/default-layout/lib/styles/index.css';
 
 import { pdfjs } from 'react-pdf';
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/legacy/build/pdf.worker.min.js`;
@@ -25,8 +24,8 @@ const WorkPage = () => {
         fileUrl: '/files/student-work.pdf',
         grade: 4,
         comments: 'Решение выполнено верно, но есть некоторые неточности в вычислениях',
-        dueDate: '2023-05-28T10:23:45.000Z',
-        updatedAt: '2023-05-28T12:45:23.000Z'
+        dueDate: '2023-05-28 20:20',
+        updatedAt: '2023-05-28 12:45'
       }
 
   function onDocumentLoadSuccess({ numPages }) {
@@ -43,16 +42,17 @@ const WorkPage = () => {
             <td>{studentWork.task}</td>
           </tr>
           <tr>
-            <td>Дата сдачи</td>
+            <td>Срок сдачи</td>
             <td>{studentWork.dueDate}</td>
           </tr>
           <tr>
             <td>Дата сдачи работы</td>
             <td>{studentWork.updatedAt}</td>
           </tr>
+
           <tr>
-            <td>Оценка</td>
-            <td>{studentWork.grade}</td>
+            <td>Процент оригинальности </td>
+            <td>77%</td>
           </tr>
           <tr>
             <td>Загруженный файл</td>
@@ -70,17 +70,26 @@ const WorkPage = () => {
               </a>
             </td>
           </tr>
+          <tr>
+            <td>Оценка</td>
+            <td>{studentWork.grade}</td>
+          </tr>
         </tbody>
       </Table>
-      <div style={{ height: '750px' }}>
         <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.7.107/build/pdf.worker.min.js">
-            <div style={{ height: '750px' }}>
-                <Viewer fileUrl={studentWork.fileUrl} plugins={[defaultLayoutPluginInstance]} />;
-            </div>
+        <div
+        style={{
+            height: '2000px',
+            width: '1500px',
+            marginLeft: 'auto',
+            marginRight: 'auto'
+        }}
+    >
+        <Viewer  fileUrl={studentWork.fileUrl}  plugins={[defaultLayoutPluginInstance]} />
+    </div>
         </Worker>
        </div>
 
-    </div>
   );
 }
 
