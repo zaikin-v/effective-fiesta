@@ -43,7 +43,7 @@ const GroupTable = () => {
         ))}
         </DropdownButton>
       {selectedGroup && (
-        <Table striped bordered hover>
+        <Table bordered hover>
           <thead>
             <tr>
               <th>ФИО</th>

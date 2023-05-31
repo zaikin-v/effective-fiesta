@@ -35,7 +35,7 @@ const Disciplines = (props) => {
     return (
     <div>
         <h1>Мои дисциплины</h1>
-        <Table striped bordered hover size="sm">
+        <Table bordered hover size="sm">
             <thead>
                 <tr>
                     <th>Наименование</th>

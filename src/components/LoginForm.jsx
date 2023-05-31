@@ -28,19 +28,10 @@ const LoginForm = (props) => {
         }
     },[isLoggedIn]);
 
-    // useEffect(() => {
-    //     dispatch(clearMessage());
-    // }, [dispatch]);
-
     const initialValues = {
         username: "",
         password: "",
     };
-
-    // const validationSchema = Yup.object().shape({
-    //     username: Yup.string().required("This field is required!"),
-    //     password: Yup.string().required("This field is required!"),
-    // });
 
     const handleLogin = (formValue) => {
         const {username, password} = formValue;
@@ -61,13 +52,9 @@ const LoginForm = (props) => {
         <div className="form-sign" style={formStyle}>
             <Formik initialValues={initialValues} onSubmit={handleLogin}>
                 <Form className="form-sign">
-                    <img className="mb-4"
-                           src="https://img.icons8.com/metro/452/cat.png"
-                           width="72"
-                           height="57"/>
-                    <h1 className="h3 mb-3 fw-normal">Please sign in</h1>
+                    <h1 className="h3 mb-3 fw-normal">Войдите</h1>
                         <div className="form-group">
-                            <label htmlFor="username">Username</label>
+                            <label htmlFor="username">Почта</label>
                             <Field name="username" type="text" className="form-control" />
                             <ErrorMessage
                                 name="username"
@@ -76,7 +63,7 @@ const LoginForm = (props) => {
                             />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="password">Password</label>
+                            <label htmlFor="password">Пароль</label>
                             <Field name="password" type="password" className="form-control" />
                             <ErrorMessage
                                 name="password"
@@ -89,7 +76,7 @@ const LoginForm = (props) => {
                                 {loading && (
                                     <span className="spinner-border spinner-border-sm"></span>
                                 )}
-                                <span>Login</span>
+                                <span>Вход</span>
                             </button>
                         </div>
                 </Form>
